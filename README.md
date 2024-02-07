@@ -1,3 +1,3 @@
 # Template
 
-This a template for a new project
+WeatherIn is a simple weather app.
