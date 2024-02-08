@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const loader = require("sass-loader");
 
 module.exports = {
   entry: {
@@ -35,6 +36,14 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.scss$/, //"/\.s[ac]ss$/i" for .sass and .scss extension 
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ["file-loader"],
+      },
       {
         test: /\.(?:js|mjs|cjs)$/,
         exclude: /node_modules/,
