@@ -1,1 +1,3 @@
-console.log("webpack config");
+import render from "./app/render";
+
+render();
