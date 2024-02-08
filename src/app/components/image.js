@@ -21,7 +21,7 @@ export default class Image {
     }
 
     removeClass(cls) {
-        this.html.remove(cls);
+        this.html.classList.remove(cls);
     }
     
     getClasses() {
