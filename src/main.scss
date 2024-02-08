@@ -1,0 +1,55 @@
+$font-color: #78909c;
+$font-stack: Helvetica, sans-serif;
+$primary-color: #fff;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#main-container {
+    background-color: $primary-color;
+    display: grid;
+    grid-template-columns: 1fr 16fr 6fr;
+    // justify-items: center;
+    // align-items: start;
+}
+
+.outer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    border: 1px red dashed;
+    padding: 10px;
+}
+
+// Left Nav style
+.top-section {
+    display: inline-grid;
+    justify-items: center;
+    align-items: start;
+    gap: 10vh;
+    #logo-w {
+        display: inline-grid;
+        justify-items: center;
+        gap: 10px;
+    } 
+    #logo-text {
+        color: $font-color;
+        font-weight: bold;
+        font-family: $font-stack;
+    }
+    
+    #logo-fig {
+        width: 40px;
+    }
+}
+.nav-btn-c {
+    display: inline-grid;
+    justify-items: center;
+    align-items: start;
+    
+}
+
