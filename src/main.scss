@@ -1,7 +1,16 @@
-$font-color: #78909c;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Protest+Strike&display=swap');
+
+$font-color: #1C274C;
+$logo-font: 'Bebas Neue', sans-serif;
 $font-stack: Helvetica, sans-serif;
 $primary-color: #fff;
+$accent-color: #ff8100;
+$button-shadow: rgba(0, 0, 0, 0.2);
 
+@mixin button_state() {
+    background-color: $accent-color;
+    box-shadow: 0 4px 8px 0px $button-shadow;
+}
 * {
     box-sizing: border-box;
     margin: 0;
@@ -13,7 +22,7 @@ $primary-color: #fff;
     display: grid;
     grid-template-columns: 1fr 16fr 6fr;
     // justify-items: center;
-    // align-items: start;
+    align-items: start;
 }
 
 .outer-container {
@@ -22,7 +31,7 @@ $primary-color: #fff;
     justify-content: space-between;
     height: 100vh;
     border: 1px red dashed;
-    padding: 10px;
+    padding: 20px;
 }
 
 // Left Nav style
@@ -30,26 +39,59 @@ $primary-color: #fff;
     display: inline-grid;
     justify-items: center;
     align-items: start;
-    gap: 10vh;
+    gap: 5vh;
     #logo-w {
         display: inline-grid;
         justify-items: center;
-        gap: 10px;
+        gap: 2px;
     } 
     #logo-text {
         color: $font-color;
-        font-weight: bold;
-        font-family: $font-stack;
+        font-size: 24px;
+        font-family: $logo-font;
+        letter-spacing: 2px;
     }
     
-    #logo-fig {
-        width: 40px;
+    svg {
+        width: 1.8rem;
     }
+
 }
 .nav-btn-c {
     display: inline-grid;
     justify-items: center;
     align-items: start;
-    
+    gap: 3vh;
 }
+.nav-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    border-radius: .8rem;
+    border: none;
+    background: none;
+    svg {
+        width: 1.3rem;
+    }
+}
+
+.nav-btns:hover {
+    @include button_state();
+    svg path {
+        stroke-width: 2px;
+        stroke: $primary-color;
+    }
+    svg circle {
+        stroke: $primary-color;
+        stroke-width: 2px;
+    }
+}
+
+#expend {
+    svg {
+        rotate: 180deg;
+    }
+}
+
 
