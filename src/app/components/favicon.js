@@ -1,4 +1,4 @@
-import logo from "../../assets/icons/logo.svg";
+import logo from "../../assets/icons/logo.png";
 
 const head = document.querySelector("head");
 const linkTag = document.createElement("link");
