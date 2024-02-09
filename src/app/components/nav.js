@@ -1,5 +1,3 @@
-import Image from "./image";
-
 import homeIcon from "../../assets/icons/home.svg";
 import chartIcon from "../../assets/icons/chart.svg";
 import mapIcon from "../../assets/icons/map.svg";
@@ -29,30 +27,19 @@ function createBtnObj() {
     return navObj;
 }
 
-function addBtnIcon(icon) {
-    if (typeof icon !== "string" || icon.trim() === "") {
+function addBtnIcon(btnElement, icon) {
+    if (typeof icon !== "string" || icon.trim() === "" || btnElement === undefined || btnElement === null) {
         throw new Error("Invalid icon.");
     }
-
-    const img = new Image();
-    img.addSrc(icon);
-    img.addAlt("Navigation Button");
-    return img.html;
-}
-
-function appendImg(navBtnObj, btnName, img) {
-    if (!navBtnObj[btnName]) {
-        console.warn(`Button with name '${btnName}' not found.`);
-        return;
-    }
-    navBtnObj[btnName].appendChild(img);
+    const button = btnElement;
+    button.innerHTML = icon;
 }
 
 export default function nav() {
     try {
         const navBtnObj = createBtnObj();
         Object.keys(navBtnObj).forEach((prop) =>  {
-            appendImg(navBtnObj, prop, addBtnIcon(iconObj[prop]));
+            addBtnIcon(navBtnObj[prop], iconObj[prop]);
         });
     } catch (error) {
         console.error("An error occurred:", error.message);
