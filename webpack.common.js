@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackInlineSVGPlugin = require("html-webpack-inline-svg-plugin");
 
 module.exports = {
   entry: {
@@ -36,7 +37,11 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.svg$/,
+        loader: "svg-inline-loader"
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
         use: ["file-loader"],
       },
       {
