@@ -4,6 +4,10 @@ import mapIcon from "../../assets/icons/map.svg";
 import calIcon from "../../assets/icons/calendar.svg";
 import settingsIcon from "../../assets/icons/settings.svg";
 import expendIcon from "../../assets/icons/expend.svg";
+import NavButton from "./navButton";
+
+// Track active button
+let activeButton = document.getElementById("home");
 
 const iconObj = {
     home: homeIcon,
@@ -14,6 +18,16 @@ const iconObj = {
     expend: expendIcon
 }
 
+// Add functionality
+function makeBtnInteractive (btn) {
+    NavButton.onClick(btn, () => {
+        NavButton.setButtonUnactive(activeButton);
+        NavButton.setButtonActive(btn);
+        activeButton = btn;
+    });
+}
+
+// Add UI to the page
 function createBtnObj() {
     const navBtns = document.querySelectorAll(".nav-btns");
     if (navBtns.length === 0) {
@@ -23,6 +37,11 @@ function createBtnObj() {
     navBtns.forEach((btn) => {
         const btnObj = {[btn.id]: btn};
         Object.assign(navObj, btnObj);
+
+        if (btn.id === "home") {
+            NavButton.setButtonActive(btn);
+        }
+        makeBtnInteractive(btn, activeButton);
     });
     return navObj;
 }
@@ -34,6 +53,7 @@ function addBtnIcon(btnElement, icon) {
     const button = btnElement;
     button.innerHTML = icon;
 }
+
 
 export default function nav() {
     try {
