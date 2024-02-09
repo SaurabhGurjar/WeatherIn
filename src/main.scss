@@ -7,10 +7,19 @@ $primary-color: #fff;
 $accent-color: #ff8100;
 $button-shadow: rgba(0, 0, 0, 0.2);
 
-@mixin button_state() {
+@mixin nav_button_hover_active() {
     background-color: $accent-color;
     box-shadow: 0 4px 8px 0px $button-shadow;
+    svg path {
+        stroke-width: 2px;
+        stroke: $primary-color;
+    }
+    svg circle {
+        stroke: $primary-color;
+        stroke-width: 2px;
+    }
 }
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -77,15 +86,8 @@ $button-shadow: rgba(0, 0, 0, 0.2);
 }
 
 .nav-btns:hover {
-    @include button_state();
-    svg path {
-        stroke-width: 2px;
-        stroke: $primary-color;
-    }
-    svg circle {
-        stroke: $primary-color;
-        stroke-width: 2px;
-    }
+    @include nav_button_hover_active();
+    
 }
 
 #expend {
@@ -94,4 +96,7 @@ $button-shadow: rgba(0, 0, 0, 0.2);
     }
 }
 
+.active {
+    @include nav_button_hover_active();
+}
 
