@@ -8,6 +8,8 @@ import NavButton from "./navButton";
 
 // Track active button
 let activeButton = document.getElementById("home");
+let expBtnActive = false;
+
 
 const iconObj = {
     home: homeIcon,
@@ -21,9 +23,20 @@ const iconObj = {
 // Add functionality
 function makeBtnInteractive (btn) {
     NavButton.onClick(btn, () => {
-        NavButton.setButtonUnactive(activeButton);
-        NavButton.setButtonActive(btn);
-        activeButton = btn;
+        if (btn.id === "expend") {
+            if (expBtnActive) {
+                NavButton.setButtonUnactive(btn)
+                expBtnActive = false;
+            } else {
+                NavButton.setButtonActive(btn);
+                expBtnActive = true;
+            }
+
+        } else {
+            NavButton.setButtonUnactive(activeButton);
+            NavButton.setButtonActive(btn);
+            activeButton = btn;
+        }
     });
 }
 
