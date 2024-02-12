@@ -1,6 +1,25 @@
 export default class WeatherData {
   static key = "15d7fcd35f4b4350975130310240102";
 
+  static windDir = {
+    W: "West Wind",
+    S: "South Wind",
+    N: "North Wind",
+    E: "East Wind",
+    SW: "South-west Wind",
+    SE: "South-east Wind",
+    NE: "North-east Wind",
+    WNW: "West-northwest Wind",
+    NW: "Northwest Wind",
+    NNW: "North-northwest Wind",
+    WSW: "West-southwest Wind",
+    ENE: "East-northeast Wind",
+    NNE: "North-northeast Wind",
+    SSE: "South-southeast Wind",
+    ESE: "East-southeast Wind",
+    SSW: "South-southwest Wind",
+  };
+
   static preUrl = "https://api.weatherapi.com/v1";
 
   static async currentTemp(search) {
@@ -29,7 +48,7 @@ export default class WeatherData {
     this.data = WeatherData.wd(this.response);
   }
 
-  // Return current temprature in °C.
+  // Return current temprature value in °C.
   async currentTempInCelsius() {
     const data = await this.data;
     return `${data.current.temp_c}°C`;
@@ -38,17 +57,16 @@ export default class WeatherData {
   // Return weather condition.
   async currentCondition() {
     const data = await this.data;
-    console.log(data);
     return data.current.condition.text;
   }
 
-  // Return current pressure in mb(millibar).
+  // Return current pressure value in mb(millibar).
   async currentPressureInmb() {
     const data = await this.data;
     return `${data.current.pressure_mb}mb`;
   }
 
-  // Return current visibilty in km.
+  // Return current visibilty value in km.
   async currentVisiblityInKm() {
     const data = await this.data;
     return `${data.current.vis_km}km`;
@@ -64,35 +82,18 @@ export default class WeatherData {
     return data.current.air_quality.pm2_5;
   }
 
-  // Returns data in percentage
+  // Returns AQI data value in percentage
   async airQualityIndicator() {
     const airQ = await this.currentAirQuality();
     return `${Math.round((airQ / 500) * 100)}%`;
   }
 
+  // Return wind direction data
   async currentWindDirection() {
-    const windDir = {
-      W: "West Wind",
-      S: "South Wind",
-      N: "North Wind",
-      E: "East Wind",
-      SW: "South-west Wind",
-      SE: "South-east Wind",
-      NE: "North-east Wind",
-      WNW: "West-northwest Wind",
-      NW: "Northwest Wind",
-      NNW: "North-northwest Wind",
-      WSW: "West-southwest Wind",
-      ENE: "East-northeast Wind",
-      NNE: "North-northeast Wind",
-      SSE: "South-southeast Wind",
-      ESE: "East-southeast Wind",
-      SSW: "South-southwest Wind",
-    };
     const data = await this.data;
     const currentWindDir = data.current.wind_dir.toUpperCase();
-    if (currentWindDir in windDir) {
-      return windDir[currentWindDir];
+    if (currentWindDir in WeatherData.windDir) {
+      return WeatherData.windDir[currentWindDir];
     }
     return currentWindDir;
   }
