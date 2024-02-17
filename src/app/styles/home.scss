@@ -1,0 +1,279 @@
+$grey-bg: #ececec;
+$primary-color: #fff;
+$secondary-color: #000;
+$search-btn-shadow: rgba(0, 0, 0, 0.05);
+$visiblity-crd-color: #a9ce21;
+$pressure-crd-color: #1f2544;
+$humadity-crd-color: #fff;
+$accent-color: #ff8100;
+
+.main-cw {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    background-color: rgba(255, 0, 0, 0.1);
+    width: 95%;
+    padding: 10px;
+  }
+
+  button {
+    font-size: 14px;
+    background-color: rgba(255, 0, 0, 0.1);
+    padding: 10px;
+    border: none;
+  }
+
+  button:hover {
+    background-color: rgba(255, 0, 0, 0.5);
+  }
+}
+
+// Home page header style
+#place-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+span {
+  font-family: Helvetica, sans-serif;
+}
+
+#place-name {
+  display: flex;
+  font-size: 3em;
+  font-weight: 600;
+}
+
+#search-box-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap-reverse;
+  form {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    input[type="search"] {
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: none;
+      background: $search-btn-shadow;
+      outline: none;
+      height: 100%;
+    }
+    button {
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      background-color: $primary-color;
+      box-shadow: 0px 2px 2px 2px $search-btn-shadow;
+    }
+  }
+}
+
+// Home page weather and air quality card
+#wc-c {
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.weather-details-card {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  height: 50vh;
+  min-width: 420px;
+  min-height: 300px;
+  max-width: 520px;
+  max-height: 400px;
+  padding: 30px;
+  border: none;
+  border-radius: 20px;
+  justify-content: space-between;
+
+  .card-section {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .card-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: #ececec;
+    border-radius: 30px;
+    img {
+      width: 100%;
+    }
+  }
+  .card-heading-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  #card-middle-section,
+  #a-card-middle-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+
+    #card-temp,
+    #m-unit {
+      font-size: 64px;
+      font-weight: 700;
+    }
+
+    #condition-text {
+      font-size: 20px;
+    }
+  }
+}
+
+#card-place-name,
+#place-description,
+#card-air-quality-text,
+#air-qlty-description {
+  font-weight: 900;
+}
+
+#wdc {
+  background-image: url(../../assets/images/clouds.jpeg);
+  background-size: 520px 400px;
+}
+
+#adc {
+  background-image: url(../../assets/images/st-air.jpeg);
+}
+
+#card-bottom-section {
+  justify-content: space-evenly;
+}
+.card-pr-vis-hu-wrapper {
+  display: flex;
+  padding: 20px;
+  width: 120px;
+  height: 100px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $primary-color;
+  border-radius: 20px;
+
+  .pvh-data {
+    font-size: 24px;
+    font-weight: 900;
+  }
+}
+#card-pressure {
+  background-color: $pressure-crd-color;
+  color: $primary-color;
+}
+
+#card-visbility {
+  background-color: $visiblity-crd-color;
+}
+
+#card-humadity {
+  background-color: $humadity-crd-color;
+}
+
+#card-air-quality-text,
+#air-qlty-description {
+  color: $primary-color;
+}
+.temp-data-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#aqi {
+  display: flex;
+  font-size: 64px;
+  font-weight: 700;
+  align-items: center;
+  color: $primary-color;
+}
+
+#aqi-tag,
+#low-temp {
+  width: fit-content;
+  height: fit-content;
+  padding: 6px 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  background-color: $visiblity-crd-color;
+  color: $primary-color;
+}
+
+#low-temp {
+  background-color: $primary-color;
+  color: $secondary-color;
+}
+
+#wind-direction {
+  color: $primary-color;
+}
+
+#a-card-bottom-section {
+  display: flex;
+  width: 100%;
+  height: 100px;
+  background-color: $primary-color;
+  padding: 20px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+
+  .quality-indicator-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+
+    .quality-text-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .quality-indicator-bar {
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      color: $accent-color;
+      background-color: $grey-bg;
+      #quality-bar-fill {
+        position: relative;
+        height: 100%;
+        border-radius: 2px;
+        background-color: $accent-color;
+      }
+    }
+  }
+}
