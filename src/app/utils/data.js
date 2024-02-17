@@ -20,31 +20,28 @@ export default class WeatherData {
     SSW: "South-southwest Wind",
   };
 
-  static preUrl = "https://api.weatherapi.com/v1";
+  static preURL = "https://api.weatherapi.com/v1";
 
-  static async currentTemp(search) {
-    try {
-      const url = `${WeatherData.preUrl}/current.json?key=${WeatherData.key}&q=${search}&aqi=yes`;
-      const request = new Request(url, { mode: "cors" });
-      return await fetch(request);
-    } catch (error) {
-      throw new Error(error);
-    }
+  static async fetchCurrentWeatherData(search) {
+    const url = `${WeatherData.preURL}/current.json?key=${WeatherData.key}&q=${search}&aqi=yes`;
+    const request = new Request(url, { mode: "cors" });
+    const promise = await fetch(request);
+    return promise;
   }
 
   static async wd(response) {
-    try {
-      const wdResponse = await response;
-      const data = await wdResponse.json();
-      return data;
-    } catch (error) {
-      throw new Error(error);
-    }
+    const wdResponse = await response;
+    const data = await wdResponse.json();
+    return data;
   }
 
-  constructor(search = "manali") {
-    this.search = search;
-    this.response = WeatherData.currentTemp(this.search);
+  constructor(search = "roorkee") {
+    if (search === " " || search === "") {
+      this.search = "roorkee";
+    } else {
+      this.search = search;
+    }
+    this.response = WeatherData.fetchCurrentWeatherData(this.search);
     this.data = WeatherData.wd(this.response);
   }
 
@@ -85,7 +82,7 @@ export default class WeatherData {
   // Returns AQI data value in percentage
   async airQualityIndicator() {
     const airQ = await this.currentAirQuality();
-    return `${Math.round((airQ / 500) * 100)}%`;
+    return `${Math.round((airQ / 300) * 100)}%`;
   }
 
   // Return wind direction data
@@ -96,5 +93,17 @@ export default class WeatherData {
       return WeatherData.windDir[currentWindDir];
     }
     return currentWindDir;
+  }
+
+  // Return city name
+  async city() {
+    const data = await this.data;
+    return data.location.name;
+  }
+
+  // Return country name
+  async country() {
+    const data = await this.data;
+    return data.location.country;
   }
 }
