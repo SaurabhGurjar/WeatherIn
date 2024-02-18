@@ -99,7 +99,7 @@ span {
   display: flex;
   flex-direction: column;
   width: 50vw;
-  height: 50vh;
+  height: 40vh;
   min-width: 420px;
   min-height: 300px;
   max-width: 520px;
@@ -163,12 +163,12 @@ span {
 }
 
 #wdc {
-  background-image: url(../../assets/images/clouds.jpeg);
+  background-image: url(../../assets/images/clear_sky_green_field_with_the\ \(1\).jpeg);
   background-size: 520px 400px;
 }
 
 #adc {
-  background-image: url(../../assets/images/st-air.jpeg);
+  background-image: url(../../assets/images/polluted_city_breathtaking_dig.jpeg);
 }
 
 #card-bottom-section {
@@ -222,7 +222,7 @@ span {
 }
 
 #aqi-tag,
-#low-temp {
+#max-temp {
   width: fit-content;
   height: fit-content;
   padding: 6px 10px;
@@ -232,7 +232,7 @@ span {
   color: $primary-color;
 }
 
-#low-temp {
+#max-temp {
   background-color: $primary-color;
   color: $secondary-color;
 }
@@ -277,3 +277,51 @@ span {
     }
   }
 }
+
+#chart {
+  display: flex;
+  height: 300px;
+}
+
+#hourly-tomorrow-temp-wrapper {
+  display: flex;
+  border-radius: 20px;
+  height: 40vh;
+  margin-top: 10px;
+  gap: 40px;
+  #temp-chart-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+
+    #chart {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  #tomorrow-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: url("/src/assets/images/raining_in_a_field_breathtakin.jpeg");
+    padding: 20px;
+    border-radius: 20px;
+    height: 100%;
+    width: 80vw;
+    max-width: 350px;
+    min-width: 300px;
+    color: $primary-color;
+  }
+}
+
+#tomorrow-card-temp {
+  font-size: 54px;
+  font-weight: 900;
+}
+
