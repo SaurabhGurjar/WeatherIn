@@ -22,8 +22,8 @@ export default class WeatherData {
 
   static preURL = "https://api.weatherapi.com/v1";
 
-  static async fetchCurrentWeatherData(search) {
-    const url = `${WeatherData.preURL}/current.json?key=${WeatherData.key}&q=${search}&aqi=yes`;
+  static async fetchWeatherData(search, days) {
+    const url = `${WeatherData.preURL}/forecast.json?key=${WeatherData.key}&q=${search}&days=${days}&aqi=yes`;
     const request = new Request(url, { mode: "cors" });
     const promise = await fetch(request);
     return promise;
@@ -41,7 +41,7 @@ export default class WeatherData {
     } else {
       this.search = search;
     }
-    this.response = WeatherData.fetchCurrentWeatherData(this.search);
+    this.response = WeatherData.fetchWeatherData(this.search, 2);
     this.data = WeatherData.wd(this.response);
   }
 
@@ -95,6 +95,25 @@ export default class WeatherData {
     return currentWindDir;
   }
 
+  // Return today's max temperature
+  async todayMaxTempInCelsius() {
+    const data = await this.data;
+    return `${data.forecast.forecastday[0].day.maxtemp_c}°C`;
+  }
+
+  // Return hourly data
+  async hourlyWeatherInCelsius() {
+    const data = await this.data;
+    console.log(data.forecast.forecastday[0].hour);
+    const temps = [];
+    const hours = [];
+    data.forecast.forecastday[0].hour.forEach((item) => {
+      temps.push(item.temp_c);
+      hours.push(item.time.split(" ")[1]);
+    });
+    return [hours, temps];
+  }
+
   // Return city name
   async city() {
     const data = await this.data;
@@ -105,5 +124,17 @@ export default class WeatherData {
   async country() {
     const data = await this.data;
     return data.location.country;
+  }
+
+  // Return tomorrow max temperature
+  async tomorrowTempInCelsius () {
+    const data = await this.data;
+    return `${data.forecast.forecastday[1].day.maxtemp_c}°C`;
+  }
+
+  // Return tomorrow weather condition
+  async tomorrowCondition() {
+    const data = await this.data;
+    return data.forecast.forecastday[1].day.condition.text;
   }
 }
