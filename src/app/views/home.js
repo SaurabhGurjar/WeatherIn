@@ -1,5 +1,6 @@
 export default function homePage() {
-  return `<div class="main-cw">
+  return `
+  <div class="main-cw">
         <div id="place-wrapper">
           <span id="place-name">Delhi</span>
           <span id="country">India</span>
@@ -32,7 +33,7 @@ export default function homePage() {
               <div>
                 <span id="card-temp">10&degC</span>
               </div>
-              <span id="low-temp">11&degC</span>
+              <span id="max-temp">11&degC</span>
             </div>
             <span id="condition-text">Partly Cloudy</span>
           </div>
@@ -80,26 +81,19 @@ export default function homePage() {
           </div>
         </div>
       </div>
-      <div class="main-cw">
+      <div class="main-cw" id="hourly-tomorrow-temp-wrapper">
         <div id="temp-chart-wrapper">
-          <div id="interface-wrapper">
-            <span id="text">How's the temprature today?</span>
-            <div id="i-button-wrapper">
-              <button class="interface-btns"></button>
-              <button class="interface-btns"></button>
-            </div>
-          </div>
-          <div id="chart"></div>
+          <h1 id="text">How's the temprature today?</h1>
         </div>
         <div id="tomorrow-card">
-          <div>
-            <span>Tomorrow</span>
+          <div id="tomoorow-card-header">
+            <h5>Tomorrow</h5>
           </div>
           <div id="tomorrow-card-temp-wrapper">
-            <span id="tomorrow-card-temp">20&degC</span>
-            <span id="tomorrow-weather">Rainy</span>
+            <p id="tomorrow-card-temp">20&degC</p>
+            <p id="tomorrow-weather">Rainy</p>
           </div>
         </div>
       </div>
-    <div class="outer-container" id="info-c"></div>`;
+    </div>`;
 }
