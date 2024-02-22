@@ -10,10 +10,9 @@
       <div class="outer-container" id="nav-c">
         <div class="top-section">
           <div id="logo-w"></div>
-          <div class="nav-btn-c">
+          <div class="nav-btn-c" id="pages-btns-container">
             <button class="nav-btns" id="home"></button>
             <button class="nav-btns" id="hourly"></button>
-            <button class="nav-btns" id="details"></button>
             <button class="nav-btns" id="week"></button>
             <button class="nav-btns" id="settings"></button>
           </div>
@@ -22,10 +21,75 @@
           <button class="nav-btns" id="expend"></button>
         </div>
       </div>
-      <div class="outer-container" id="main-c">
-        
+      <div class="outer-container" id="main-c"></div>
+      <div class="outer-container" id="right-c">
+        <div id="right-info-side">
+          <div id="ris-place-name-temp-wrapper">
+            <div id="day-state-place-name-wrapper">
+              <h2 id="day-state">Sun</h2>
+              <p id="region">Roorkee, Uttarakhand</p>
+            </div>
+            <div id="ris-temp-wrapper">
+              <h1 id="temps">22&degC</h1>
+            </div>
+          </div>
+          <div id="ris-sun-position-chart">
+            <canvas id="sun-canvas"></canvas>
+          </div>
+          <div id="ris-uv-wrapper">
+            <div id="ris-icon-wrapper">icon</div>
+            <div id="ris-uv-data-wrapper">
+              <span id="ris-uv-number-and-tag-wrapper">
+                <h1 id="ris-uv-data">2UV</h1>
+                <span id="ris-uv-tag">
+                  <p id="ris-ui-tag-text">
+                    Moderate
+                  </p>
+                </span>
+              </span>
+              <p id="ris-uv-text">Moderate risk from UV rays</p>
+            </div>
+          </div>
+          <div id="ris-weather-prediction-wrapper">
+            <h1 class="ris-weather-prediction-heading">Weather Prediction</h1>
+            <div class="ris-weather-cards" id="ris-weather-card-1">
+              <div class="ris-weather-card-icon-date-condition-wrapper">
+                icon
+                <div class="ris-weather-card-date-condition">
+                  <p class="ris-weather-card-date" id="1-ris-weather-card-date">February 28</p>
+                  <h3 id="1-ris-weather-card-condition">Cloudy</h3>
+                </div>
+              </div>
+              <div class="ris-weather-card-temps">
+                <p id="1-ris-weather-card-temps-text">26&deg/19&deg</p>
+              </div>
+            </div>
+            <div class="ris-weather-cards" id="ris-weather-card-2">
+              <div class="ris-weather-card-icon-date-condition-wrapper">
+                icon
+                <div class="ris-weather-card-date-condition">
+                  <p class="ris-weather-card-date" id="2-ris-weather-card-date">February 29</p>
+                  <h3 id="2-ris-weather-card-condition">Cloudy</h3>
+                </div>
+              </div>
+              <div class="ris-weather-card-temps">
+                <p id="2-ris-weather-card-temps-text">26&deg/19&deg</p>
+              </div>
+            </div>
+            <div class="ris-weather-cards" id="ris-weather-card-3">
+              <div class="ris-weather-card-icon-date-condition-wrapper">
+                icon
+                <div class="ris-weather-card-date-condition">
+                  <p class="ris-weather-card-date" id="3-ris-weather-card-date">March 1</p>
+                  <h3 id="3-ris-weather-card-condition">Cloudy</h3>
+                </div>
+              </div>
+              <div class="ris-weather-card-temps">
+                <p id="3-ris-weather-card-temps-text">26&deg/19&deg</p>
+              </div>
+            </div>
+          </div>
       </div>
-      <div class="outer-container" id="info-c"></div>
     </div>
   </body>
 </html>
