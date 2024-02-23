@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export default class WeatherData {
   static key = "15d7fcd35f4b4350975130310240102";
 
@@ -35,13 +37,8 @@ export default class WeatherData {
     return data;
   }
 
-  constructor(search = "roorkee") {
-    if (search === " " || search === "") {
-      this.search = "roorkee";
-    } else {
-      this.search = search;
-    }
-    this.response = WeatherData.fetchWeatherData(this.search, 2);
+  constructor(days, search = "roorkee") {
+    this.response = WeatherData.fetchWeatherData(search, days);
     this.data = WeatherData.wd(this.response);
   }
 
@@ -54,6 +51,7 @@ export default class WeatherData {
   // Return weather condition.
   async currentCondition() {
     const data = await this.data;
+    // console.log(data);
     return data.current.condition.text;
   }
 
@@ -104,7 +102,6 @@ export default class WeatherData {
   // Return hourly data
   async hourlyWeatherInCelsius() {
     const data = await this.data;
-    console.log(data.forecast.forecastday[0].hour);
     const temps = [];
     const hours = [];
     data.forecast.forecastday[0].hour.forEach((item) => {
@@ -127,7 +124,7 @@ export default class WeatherData {
   }
 
   // Return tomorrow max temperature
-  async tomorrowTempInCelsius () {
+  async tomorrowTempInCelsius() {
     const data = await this.data;
     return `${data.forecast.forecastday[1].day.maxtemp_c}°C`;
   }
@@ -136,5 +133,104 @@ export default class WeatherData {
   async tomorrowCondition() {
     const data = await this.data;
     return data.forecast.forecastday[1].day.condition.text;
+  }
+
+  // Return astro data
+  async astro() {
+    const data = await this.data;
+    return data.forecast.forecastday[0].astro;
+  }
+
+  async dayOrNight() {
+    const data = await this.data;
+    return Number(data.current.is_day) ? "Sun" : "Moon";
+  }
+
+  async cityName() {
+    const data = await this.data;
+    return data.location.name;
+  }
+
+  async stateName() {
+    const data = await this.data;
+    return data.location.region;
+  }
+
+  // Return today UV data
+  async todayUVData() {
+    const data = await this.data;
+    return data.forecast.forecastday[0].day.uv;
+  }
+
+ async uvLevel() {
+    const UV = parseInt(await this.todayUVData(), 10);
+    if (UV > 2 && UV <= 5) return "Moderate";
+    if (UV > 5 && UV <= 7) return "High";
+    if (UV > 7 && UV <= 10) return "Very high";
+    if (UV >= 11) return "Extreme";
+    return "Low";
+  }
+
+  async #maxminTempInCelsius(day) {
+    let d;
+    if (day >= 0 && day < 3) {
+      d = Number(day);
+    } else {
+      throw new Error(
+        "The value of day should be between and inclusive of 0 and 2.",
+      );
+    }
+    const data = await this.data;
+    return {
+      max: data.forecast.forecastday[d].day.maxtemp_c,
+      min: data.forecast.forecastday[d].day.mintemp_c,
+    };
+  }
+
+  // Return day min temperature
+  async dayMaxTempInCelsius(day) {
+    const tp = await this.#maxminTempInCelsius(parseInt(day, 10));
+    return tp.max;
+  }
+
+  // Return day min temperature
+  async dayMinTempInCelsius(day) {
+    const tp = await this.#maxminTempInCelsius(parseInt(day, 10));
+    return tp.min;
+  }
+
+  // Format date in Month name and day form (February 23).
+  async #dateFormatter(d) {
+    const day = parseInt(d, 10);
+    if (day > 2 && day < 0) {
+      throw new Error(
+        "The value of day should be between and inclusive of 0 and 2.",
+      );
+    } else {
+      const data = await this.data;
+      const [year, month, date] =
+        data.forecast.forecastday[day].date.split("-");
+      return format(new Date(year, month - 1, date), "MMMM dd");
+    }
+  }
+
+  async date(day) {
+    return this.#dateFormatter(parseInt(day, 10));
+  }
+
+  async #dayCondition(d) {
+    const day = parseInt(d, 10);
+    if (day > 2 && day < 0) {
+      throw new Error(
+        "The value of day should be between and inclusive of 0 and 2.",
+      );
+    } else {
+      const data = await this.data;
+      return data.forecast.forecastday[day].day.condition.text;
+    }
+  }
+
+  async condition(day) {
+    return this.#dayCondition(day);
   }
 }
