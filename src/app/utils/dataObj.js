@@ -1,6 +1,7 @@
 import checkError from "./errorUtil";
 
 let wd;
+
 export async function storeData(dobj) {
   wd = dobj;
 }
