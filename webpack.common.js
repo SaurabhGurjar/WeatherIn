@@ -38,7 +38,7 @@ module.exports = {
     rules: [
       {
         test: /\.svg$/,
-        loader: "svg-inline-loader"
+        loader: "svg-inline-loader",
       },
       {
         test: /\.(png|jpg|gif)$/,

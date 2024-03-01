@@ -5,7 +5,7 @@ const logoWrapper = document.getElementById("logo-w");
 
 export default function addLogo() {
   span.id = "logo-text";
-  span.textContent = "WeathIn";
+  span.textContent = "WEAIN";
   logoWrapper.innerHTML = logo;
   logoWrapper.appendChild(span);
 }

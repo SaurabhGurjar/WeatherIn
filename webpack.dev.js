@@ -24,10 +24,10 @@ module.exports = merge(common, {
   ],
   module: {
     rules: [
-        {
-          test: /\.scss$/, //"/\.s[ac]ss$/i" for .sass and .scss extension 
-          use: ["style-loader", "css-loader", "sass-loader"],
-        },
+      {
+        test: /\.scss$/, //"/\.s[ac]ss$/i" for .sass and .scss extension
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
     ],
   },
 });
