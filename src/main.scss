@@ -9,6 +9,10 @@ $visiblity-crd-color: #defc74;
 $grey-bg: #f7f7f7;
 $pressure-crd-color: #1f2544;
 $button-shadow: rgba(0, 0, 0, 0.2);
+$element-shadow: rgba(0, 0, 0, 0.05);
+$pressure-crd-color: #1f2544;
+$humadity-crd-color: #fff;
+$secondary-color: #000;
 
 @mixin nav_button_hover_active() {
   background-color: $accent-color;
@@ -35,7 +39,7 @@ body {
 #main-container {
   background-color: $primary-color;
   display: grid;
-  grid-template-columns: 1fr 14fr 4fr;
+  grid-template-columns: 1fr 15.5fr 5fr;
   align-items: start;
 }
 
@@ -46,7 +50,19 @@ body {
   justify-content: space-between;
   height: 100vh;
   // border: 1px red dashed;
-  padding: 20px;
+  padding: 10px;
+}
+
+.nav-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 10px;
+  border: 1px solid $button-shadow;
+  border-radius: 10px;
+  box-shadow: 4px 4px 0 2px $element-shadow;
 }
 
 // Left Nav style
@@ -117,32 +133,49 @@ body {
 
 // Right info section layout style
 #right-c {
+  display: flex;
   grid-column: 3 / 4;
-  padding: 40px;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
   gap: 20px;
   width: 100%;
-  background-color: $grey-bg;
+  padding: 20px;
+  max-width: 420px;
+  height: 100vh;
+  background-color: $primary-color;
 }
 
 #right-info-side {
+  overflow: auto;
   display: flex;
+  padding: 20px;
   flex-direction: column;
   justify-content: space-between;
+  border-radius: 20px;
+  border: 1px solid $button-shadow;
+  box-shadow: 4px 4px 0 2px $element-shadow;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   #ris-place-name-temp-wrapper {
     display: flex;
     justify-content: space-between;
     padding-bottom: 20px;
     border-bottom: 1px solid $button-shadow;
     #day-state-place-name-wrapper {
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
   }
+}
+
+// Astro icon
+#astro-icon {
+  position: absolute;
+  top: -8px;
+  left: 60px;
+  width: 40px;
 }
 
 #temps {
@@ -154,7 +187,7 @@ body {
 #ris-uv-wrapper {
   display: flex;
   justify-content: flex-start;
-  gap: 20px;
+  gap: 30px;
   align-items: center;
   padding: 20px;
   border-radius: 20px;
@@ -168,8 +201,8 @@ body {
   justify-content: center;
   align-items: center;
   padding: 10px;
+  width: 4.5rem;
 }
-
 #ris-uv-data-wrapper {
   display: flex;
   flex-direction: column;
@@ -201,6 +234,11 @@ body {
   font-size: 14px;
 }
 
+#ris-sun-position-chart {
+  display: flex;
+  justify-content: center;
+}
+
 #ris-weather-prediction-wrapper {
   display: flex;
   flex-direction: column;
@@ -212,6 +250,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 4px solid $element-shadow;
   border-radius: 20px;
   padding: 20px;
   background-color: $primary-color;
@@ -226,7 +265,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .ris-weather-card-date-condition {
@@ -236,9 +275,406 @@ body {
   align-items: flex-start;
   gap: 10px;
 }
+
 .ris-weather-card-temps {
   color: $accent-color;
+  min-width: 100px;
 }
+
+.ris-weather-condition-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+}
+
 #sun-position {
   width: 320px;
+}
+
+// Home page
+
+.main-cw {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.error {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    background-color: rgba(255, 0, 0, 0.1);
+    padding: 10px;
+  }
+
+  button {
+    font-size: 14px;
+    background-color: rgba(255, 0, 0, 0.1);
+    padding: 10px;
+    border: none;
+  }
+
+  button:hover {
+    background-color: rgba(255, 0, 0, 0.5);
+  }
+}
+
+// Home page header style
+#place-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+}
+
+span {
+  font-family: Helvetica, sans-serif;
+}
+
+#place-name {
+  display: flex;
+  font-size: 3em;
+  font-weight: 600;
+}
+
+#search-box-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap-reverse;
+  form {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    input[type="search"] {
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: none;
+      background: $element-shadow;
+      outline: none;
+      height: 100%;
+      min-width: 230px;
+    }
+    button {
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      background-color: $primary-color;
+      box-shadow: 0px 2px 2px 2px $element-shadow;
+    }
+  }
+}
+
+// Home page weather and air quality card
+#wc-c {
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.weather-details-card {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  height: 40vh;
+  min-width: 400px;
+  min-height: 300px;
+  max-width: 500px;
+  max-height: 400px;
+  padding: 30px;
+  border: 1px solid rgb(0, 0, 0, 0.15);
+  border-radius: 20px;
+  justify-content: space-between;
+  box-shadow: 4px 4px 0 2px $element-shadow;
+  color: $secondary-color;
+
+  .card-section {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .card-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    border-radius: 30px;
+    img {
+      width: 100%;
+    }
+  }
+  .card-heading-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  #card-middle-section,
+  #a-card-middle-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+
+    #card-temp,
+    #m-unit {
+      font-size: 64px;
+      font-weight: 700;
+    }
+
+    #condition-text {
+      font-size: 20px;
+    }
+  }
+}
+
+#card-place-name,
+#place-description,
+#card-air-quality-text,
+#air-qlty-description {
+  font-weight: 900;
+}
+
+#card-bottom-section {
+  justify-content: space-evenly;
+}
+.card-pr-vis-hu-wrapper {
+  display: flex;
+  padding: 20px;
+  width: 120px;
+  height: 100px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $primary-color;
+  border-radius: 20px;
+
+  .pvh-data {
+    font-size: 24px;
+    font-weight: 900;
+  }
+}
+#card-pressure {
+  background-color: $pressure-crd-color;
+  color: $primary-color;
+}
+
+#card-visbility {
+  background-color: $visiblity-crd-color;
+}
+
+#card-humidity {
+  border: 4px solid rgba(0, 0, 0, 0.05);
+}
+
+.temp-data-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#aqi {
+  display: flex;
+  font-size: 64px;
+  font-weight: 700;
+  align-items: center;
+}
+
+#aqi-tag,
+#max-temp {
+  width: fit-content;
+  height: fit-content;
+  padding: 6px 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  background-color: $visiblity-crd-color;
+  color: $secondary-color;
+}
+
+#max-temp {
+  background-color: $accent-color;
+  color: $primary-color;
+}
+
+#wind-direction {
+  color: $secondary-color;
+}
+
+#a-card-bottom-section {
+  display: flex;
+  width: 100%;
+  height: 100px;
+  background-color: none;
+  border: 4px solid rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+
+  .quality-indicator-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+
+    .quality-text-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .quality-indicator-bar {
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      color: $accent-color;
+      background-color: $grey-bg;
+      #quality-bar-fill {
+        position: relative;
+        height: 100%;
+        width: 10%;
+        border-radius: 2px;
+        background-color: $accent-color;
+      }
+    }
+  }
+}
+
+#chart {
+  display: flex;
+  height: 300px;
+}
+
+#hourly-today-temp-wrapper {
+  display: flex;
+  border-radius: 20px;
+  height: 40vh;
+  margin-top: 10px;
+  min-height: 300px;
+  max-height: 350px;
+  gap: 40px;
+  #temp-chart-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+
+    #chart {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  #tomorrow-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    border: 1px solid rgb(0, 0, 0, 0.15);
+    border-radius: 20px;
+    height: 100%;
+    width: 80vw;
+    max-width: 350px;
+    min-width: 300px;
+    color: $secondary-color;
+    box-shadow: 4px 4px 0 2px $element-shadow;
+  }
+}
+
+.tomorrow-card-icon-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+#tomorrow-card-temp {
+  font-size: 54px;
+  font-weight: 900;
+}
+
+#tomorrow-weather-card-icon {
+  width: 10rem;
+  height: 10rem;
+}
+
+#tomorrow-card-temp-wrapper {
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+// Setting page
+.page-title-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  width: 80%;
+  margin-top: 20px;
+  font-weight: 900;
+  font-size: 24px;
+}
+.temp-settings-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  min-width: 400px;
+  gap: 20px;
+}
+.text-btn-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid $element-shadow;
+  border-radius: 10px;
+  box-shadow: 2px 2px 0 2px $element-shadow;
+}
+.btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 4px solid $element-shadow;
+  width: 200px;
+  height: 45px;
+  padding: 4px;
+  border-radius: 10px;
+}
+.dbtn,
+.tbtn {
+  width: 50%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+  background: none;
+}
+.tdactive {
+  color: $accent-color;
+  background-color: $element-shadow;
+  font-weight: 900;
 }
