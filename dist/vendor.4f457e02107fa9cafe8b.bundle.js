@@ -1,0 +1,1 @@
+(self.webpackChunktemplete=self.webpackChunktemplete||[]).push([[968],{60:()=>{console.log("vendor")}},e=>{var l;l=60,e(e.s=l)}]);
