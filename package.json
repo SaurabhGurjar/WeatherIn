@@ -24,7 +24,7 @@
     "eslint-plugin-import": "^2.29.1",
     "file-loader": "^6.2.0",
     "html-loader": "^5.0.0",
-    "html-webpack-inline-svg-plugin": "^2.3.0",
+    "html-webpack-inline-svg-plugin": "^0.2.2",
     "html-webpack-plugin": "^5.6.0",
     "mini-css-extract-plugin": "^2.8.0",
     "prettier": "3.2.5",
@@ -37,5 +37,10 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
     "webpack-merge": "^5.10.0"
+  },
+  "dependencies": {
+    "@bybas/weather-icons": "^2.0.0",
+    "chart.js": "^4.4.1",
+    "date-fns": "^3.3.1"
   }
 }
