@@ -1,14 +1,16 @@
-import updateUI from "./updateUI";
 import getWeatherData from "./getWeather";
 import { $ } from "./DOMElements";
-
+import { homeUI, rightSectionUI } from "./fetchDataTo";
+import { getStoreData, storeData } from "./dataObj";
 
 export default async function searchBox() {
   const form = $("search-form");
-  updateUI(getWeatherData());
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    updateUI(getWeatherData($("w-search").value));
+    storeData(getWeatherData(form.q.value));
+    const response = getStoreData();
+    homeUI(response);
+    rightSectionUI(response);
     form.reset();
   });
 }
