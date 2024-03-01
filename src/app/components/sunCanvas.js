@@ -42,7 +42,7 @@ export default class Sun {
     const dst = parseInt(distance, 10);
     const ang = angle >= 180 || angle < 0 ? 270 : Number(angle);
     const redian = ang * (Math.PI / 180);
-    const x = Math.cos(redian) * dst + 150;
+    const x = Math.cos(redian) * dst + 160;
     const y = 140 - Math.sin(redian) * dst;
     return { x, y };
   }
@@ -66,38 +66,24 @@ export default class Sun {
   drawSun() {
     const angle = Sun.currentAngle(this.rise, this.set, this.currentTime);
     const coordinates = Sun.calSunPos(angle, this.distance);
-    const sun = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="44px" height="44px">
-      <defs>
-       <linearGradient id="a" x1="26.75" x2="37.25" y1="22.91" y2="41.09" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#fbbf24"></stop><stop offset=".45" stop-color="#fbbf24"></stop>
-        <stop offset="1" stop-color="#f59e0b"></stop>
-       </linearGradient>
-     </defs>
-      <circle cx="32" cy="32" r="10.5" fill="url(#a)" stroke="#f8af18" stroke-miterlimit="10" stroke-width=".5"></circle>
-      <path fill="none" stroke="#fbbf24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"
-        d="M32 15.71V9.5m0 45v-6.21m11.52-27.81l4.39-4.39M16.09 47.91l4.39-4.39m0-23l-4.39-4.39m31.82 31.78l-4.39-4.39M15.71 32H9.5m45 0h-6.21">
-        <animateTransform attributeName="transform" dur="45s" repeatCount="indefinite" type="rotate" values="0 32 32; 360 32 32"></animateTransform>
-      </path>
-    </svg>`;
+
+    // Draw point on line to represent sun position
+    this.ctx.beginPath();
+    this.ctx.globalAlpha = 1;
+
+    this.ctx.fillStyle = "#ff8100";
+    this.ctx.arc(coordinates.x, coordinates.y, 10, 0, 2 * Math.PI);
+    this.ctx.fill();
+    // this.ctx.drawImage(this.childCanvas, 10, 10);
 
     // Draw last update time
     this.ctx.beginPath();
-    this.ctx.globalAlpha = 0.5;
+    this.ctx.globalAlpha = 0.8;
 
     this.ctx.fillStyle = "black";
     this.ctx.font = "10px Helvetica";
-    this.ctx.fillText(this.currentTime, coordinates.x + 40, coordinates.y);
+    this.ctx.fillText(this.currentTime, coordinates.x + 16, coordinates.y);
     this.ctx.fill();
-
-    // Draw sun icon to represent sun position
-    this.ctx.beginPath();
-    this.ctx.globalAlpha = 1;
-    const img = new Image();
-    img.onload = () => {
-      this.ctx.drawImage(img, coordinates.x, coordinates.y - 15);
-    };
-    img.src = `data:image/svg+xml;base64, ${btoa(sun)}`;
   }
 
   refreshPerMin() {
@@ -110,18 +96,17 @@ export function drawSunPath(sunriseTime, sunsetTime) {
   const ctx = canvas.getContext("2d");
   const canvasWidth = canvas.width;
 
-  // Draw a sun path
+  // Draw a semi-circle
   ctx.beginPath();
-  ctx.globalAlpha = 0.3;
-  ctx.setLineDash([2, 5]); // Make arc dotted.
-  ctx.arc(150, 140, 100, Math.PI, 0);
+  ctx.setLineDash([2, 4]); // Make arc dotted.
+  ctx.arc(160, 140, 100, Math.PI, 0);
   ctx.stroke();
+
   // Reset line to normal (i.e they are not dotted)
   ctx.setLineDash([]);
 
   // Draw a line
   ctx.beginPath();
-  ctx.globalAlpha = 1;
   ctx.strokeStyle = "#e67402";
   ctx.lineCap = "round";
   ctx.moveTo(0, 140);
@@ -131,28 +116,28 @@ export function drawSunPath(sunriseTime, sunsetTime) {
   // Draw point on line to represent sunrise
   ctx.beginPath();
   ctx.fillStyle = "#000000";
-  ctx.arc(250, 140, 3, 0, 2 * Math.PI);
+  ctx.arc(260, 140, 3, 0, 2 * Math.PI);
   ctx.stroke();
   ctx.fill();
 
   // Draw point on line to represent sunset
   ctx.beginPath();
   ctx.fillStyle = "#ff8100";
-  ctx.arc(50, 140, 3, 0, 2 * Math.PI);
+  ctx.arc(60, 140, 3, 0, 2 * Math.PI);
   ctx.fill();
 
   // Draw text of sunset
   ctx.beginPath();
   ctx.fillStyle = "black";
   ctx.font = "900 10px Helvetica";
-  ctx.fillText("Sunset", 35, 162);
+  ctx.fillText("Sunset", 45, 162);
   ctx.fill();
 
   // Draw text of sunrise
   ctx.beginPath();
   ctx.fillStyle = "black";
   ctx.font = "900 10px Helvetica";
-  ctx.fillText("Sunrise", 235, 162);
+  ctx.fillText("Sunrise", 245, 162);
   ctx.fill();
 
   // Draw time of sunset
@@ -160,13 +145,13 @@ export function drawSunPath(sunriseTime, sunsetTime) {
   ctx.globalAlpha = 0.5;
   ctx.fillStyle = "black";
   ctx.font = "10px Helvetica";
-  ctx.fillText(sunsetTime, 35, 183);
+  ctx.fillText(sunsetTime, 45, 183);
   ctx.fill();
 
   // Draw time of sunrise
   ctx.beginPath();
   ctx.fillStyle = "black";
   ctx.font = "10px Helvetica";
-  ctx.fillText(sunriseTime, 235, 183);
+  ctx.fillText(sunriseTime, 245, 183);
   ctx.fill();
 }
