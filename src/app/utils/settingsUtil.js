@@ -1,4 +1,5 @@
 import { $, $$ } from "./DOMElements";
+import WeatherData from "./data";
 import { rightSectionUI } from "./fetchDataTo";
 
 // Remove Active class from buttons
@@ -7,19 +8,19 @@ function removeActiveClass(cls, activeCls) {
 }
 
 function activeClassToBtn(btn) {
+  if (btn === null) return;
   btn.classList.add("tdactive");
 }
 
-async function getUnit(response) {
-  const wd = await response;
-  if (await wd.getTempInC()) {
+async function getUnit() {
+  if (WeatherData.getTempInC()) {
     const btn = $("cel-btn");
     activeClassToBtn(btn);
   } else {
     const btn = $("fah-btn");
     activeClassToBtn(btn);
   }
-  if (await wd.getDisInKm()) {
+  if (WeatherData.getDisInKm()) {
     const btn = $("km-btn");
     activeClassToBtn(btn);
   } else {
@@ -28,14 +29,12 @@ async function getUnit(response) {
   }
 }
 
-async function changeTempUnit(btnId, response) {
-  const wd = await response;
-  await wd.setTempInC(btnId === "cel-btn");
+function changeTempUnit(btnId) {
+  WeatherData.setTempInC(btnId === "cel-btn");
 }
 
-async function changeDisUnit(btnId, response) {
-  const wd = await response;
-  await wd.setDisInKm(btnId === "km-btn");
+function changeDisUnit(btnId) {
+  WeatherData.setDisInKm(btnId === "km-btn");
 }
 
 // Get button click event
@@ -56,7 +55,7 @@ function getClickEvent(cls, response) {
 }
 
 export default function settingsHandler(response) {
-  getUnit(response);
+  getUnit();
   getClickEvent("tbtn", response);
   getClickEvent("dbtn", response);
 }
