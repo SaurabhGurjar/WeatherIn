@@ -1,8 +1,10 @@
-import getWeatherData from "./getWeather";
-import updateUI from "./updateUI";
+import { getStoreData } from "./dataObj";
+import { homeUI, rightSectionUI } from "./fetchDataTo";
 
 export default function refreshApp() {
   setInterval(() => {
-    updateUI(getWeatherData());
+    const response = getStoreData();
+    homeUI(response);
+    rightSectionUI(response);
   }, 900000);
 }
