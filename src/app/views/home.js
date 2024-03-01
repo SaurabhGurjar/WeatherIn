@@ -1,11 +1,12 @@
+import { icons } from "../utils/fetchDataTo";
+
 export default function homePage() {
   return `
   <div class="main-cw">
         <div id="place-wrapper">
-          <span id="place-name">Delhi</span>
+          <span id="place-name">Roorkee</span>
           <span id="country">India</span>
         </div>
-        <!-- <span id="date">10 Feb 2024</span> -->
         <div id="search-box-wrapper">
         <form id="search-form">
           <input
@@ -15,14 +16,16 @@ export default function homePage() {
             placeholder="Search city"
             required
           />
-          <button class="search-btn" id="sbtn">Search</button>
+          <button type="submit" class="search-btn" id="sbtn">Search</button>
           </form>
         </div>
       </div>
       <div class="main-cw" id="wc-c">
         <div class="weather-details-card" id="wdc">
           <div class="card-section" id="card-top-section">
-            <div class="card-icon" id="wci"></div>
+            <div class="card-icon" id="wci">
+            ${icons.conditions[1000]};
+            </div>
             <div class="card-heading-wrapper">
               <span id="card-place-name">Weather</span>
               <span id="place-description">What's the weather.</span>
@@ -31,11 +34,11 @@ export default function homePage() {
           <div class="card-section" id="card-middle-section">
             <div class="temp-data-wrapper">
               <div>
-                <span id="card-temp">10&degC</span>
+                <span id="card-temp">16.6&degC</span>
               </div>
-              <span id="max-temp">11&degC</span>
+              <span id="max-temp">23.8&degC</span>
             </div>
-            <span id="condition-text">Partly Cloudy</span>
+            <span id="condition-text">Clear</span>
           </div>
           <div class="card-section" id="card-bottom-section">
             <div class="card-pr-vis-hu-wrapper" id="card-pressure">
@@ -54,7 +57,7 @@ export default function homePage() {
         </div>
         <div class="weather-details-card" id="adc">
           <div class="card-section" id="a-card-top-section">
-            <div class="card-icon"></div>
+            <div class="card-icon" id="aqi-icon">${icons.wind.dust}</div>
             <div class="card-heading-wrapper">
               <span id="card-air-quality-text">Air Quality</span>
               <span id="air-qlty-description">Main pollution: PM 2.5</span>
@@ -62,7 +65,7 @@ export default function homePage() {
           </div>
           <div class="card-section" id="a-card-middle-section">
             <div class="temp-data-wrapper">
-              <span id="aqi">390</span>
+              <span id="aqi">50</span>
               <span id="aqi-tag">AQI</span>
             </div>
             <span id="wind-direction">West Wind</span>
@@ -75,25 +78,31 @@ export default function homePage() {
                 <span>Hazardous</span>
               </div>
               <div class="quality-indicator-bar" id="quality-bar">
-                <div id="quality-bar-fill" style="width: 50%"></div>
+                <div id="quality-bar-fill"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="main-cw" id="hourly-tomorrow-temp-wrapper">
+      <div class="main-cw" id="hourly-today-temp-wrapper">
         <div id="temp-chart-wrapper">
           <h1 id="text">How's the temprature today?</h1>
         </div>
         <div id="tomorrow-card">
           <div id="tomoorow-card-header">
-            <h5>Tomorrow</h5>
+            <h4>Tomorrow</h4>
           </div>
-          <div id="tomorrow-card-temp-wrapper">
-            <p id="tomorrow-card-temp">20&degC</p>
-            <p id="tomorrow-weather">Rainy</p>
+          <div class="tomorrow-card-icon-text-wrapper">
+            <div
+            id="tomorrow-weather-card-icon">
+           </div>
+           <p id="tomorrow-weather">Cloudy</p>
+           <div id="tomorrow-card-temp-wrapper">
+              <p id="tomorrow-card-temp">26&degC</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>`;
+      </div>
+      </div>`;
 }
