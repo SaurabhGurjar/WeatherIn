@@ -3,6 +3,10 @@ import { format } from "date-fns";
 export default class WeatherData {
   static key = "15d7fcd35f4b4350975130310240102";
 
+  static isTempInC = true;
+
+  static isDisInKm = true;
+
   static windDir = {
     W: "West Wind",
     S: "South Wind",
@@ -25,27 +29,99 @@ export default class WeatherData {
   static preURL = "https://api.weatherapi.com/v1";
 
   static async fetchWeatherData(search, days) {
-    const url = `${WeatherData.preURL}/forecast.json?key=${WeatherData.key}&q=${search}&days=${days}&aqi=yes`;
-    const request = new Request(url, { mode: "cors" });
-    const promise = await fetch(request);
-    return promise;
+    try {
+      const url = `${WeatherData.preURL}/forecast.json?key=${WeatherData.key}&q=${search}&days=${days}&aqi=yes`;
+      const request = new Request(url, { mode: "cors" });
+      const promise = await fetch(request);
+      return promise;
+    } catch (e) {
+      return null;
+    }
   }
 
   static async wd(response) {
-    const wdResponse = await response;
-    const data = await wdResponse.json();
-    return data;
+    try {
+      const wdResponse = await response;
+      const data = await wdResponse.json();
+      return data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static getTempInC() {
+    return WeatherData.isTempInC;
+  }
+
+  static getDisInKm() {
+    return WeatherData.isDisInKm;
+  }
+
+  static setTempInC(bool) {
+    WeatherData.isTempInC = bool;
+  }
+
+  static setDisInKm(bool) {
+    WeatherData.isDisInKm = bool;
   }
 
   constructor(days, search = "roorkee") {
-    this.response = WeatherData.fetchWeatherData(search, days);
+    if (search.toLowerCase() === "delhi") {
+      this.response = WeatherData.fetchWeatherData("delhi-india", days);
+    } else {
+      this.response = WeatherData.fetchWeatherData(search, days);
+    }
     this.data = WeatherData.wd(this.response);
+  }
+
+  // Return current visibilty value.
+  async currentVisiblity() {
+    const data = await this.data;
+    if (WeatherData.isDisInKm) return `${data.current.vis_km}km`;
+    return `${data.current.vis_miles}miles`;
+  }
+
+  // Return current temprature value in °C.
+  async currentTemp() {
+    const data = await this.data;
+    if (WeatherData.isTempInC) return `${data.current.temp_c}°C`;
+    return `${data.current.temp_f}°F`;
+  }
+
+  // Return today's max temperature
+  async todayMaxTemp() {
+    const data = await this.data;
+    if (WeatherData.isTempInC)
+      return `${data.forecast.forecastday[0].day.maxtemp_c}°C`;
+    return `${data.forecast.forecastday[0].day.maxtemp_f}°F`;
+  }
+
+  // Return hourly data
+  async hourlyWeather() {
+    const data = await this.data;
+    const temps = [];
+    const hours = [];
+    data.forecast.forecastday[0].hour.forEach((item) => {
+      if (WeatherData.isTempInC) {
+        temps.push(item.temp_c);
+      } else {
+        temps.push(item.temp_f);
+      }
+      hours.push(item.time.split(" ")[1]);
+    });
+    return [hours, temps];
   }
 
   // Return current temprature value in °C.
   async currentTempInCelsius() {
     const data = await this.data;
     return `${data.current.temp_c}°C`;
+  }
+
+  // Return current temprature value in °F.
+  async currentTempInFahrenheit() {
+    const data = await this.data;
+    return `${data.current.temp_f}°F`;
   }
 
   // Return weather condition.
@@ -65,6 +141,12 @@ export default class WeatherData {
   async currentVisiblityInKm() {
     const data = await this.data;
     return `${data.current.vis_km}km`;
+  }
+
+  // Return current visibilty value in miles.
+  async currentVisiblityInMiles() {
+    const data = await this.data;
+    return `${data.current.vis_miles}mi`;
   }
 
   async currentHumidity() {
@@ -91,6 +173,16 @@ export default class WeatherData {
       return WeatherData.windDir[currentWindDir];
     }
     return currentWindDir;
+  }
+
+  async currentConditionCode() {
+    const data = await this.data;
+    return data.current.condition.code;
+  }
+
+  async conditionCode(day) {
+    const data = await this.data;
+    return data.forecast.forecastday[day].day.condition.code;
   }
 
   // Return today's max temperature
@@ -124,9 +216,11 @@ export default class WeatherData {
   }
 
   // Return tomorrow max temperature
-  async tomorrowTempInCelsius() {
+  async tomorrowTemp() {
     const data = await this.data;
-    return `${data.forecast.forecastday[1].day.maxtemp_c}°C`;
+    if (WeatherData.isTempInC)
+      return `${data.forecast.forecastday[1].day.maxtemp_c} °C`;
+    return `${data.forecast.forecastday[1].day.maxtemp_f}°F`;
   }
 
   // Return tomorrow weather condition
@@ -141,9 +235,25 @@ export default class WeatherData {
     return data.forecast.forecastday[0].astro;
   }
 
+  async astroIcon() {
+    const data = await this.data;
+    const astroData = data.forecast.forecastday[0].astro;
+    if (Number(data.current.is_day)) {
+      return "sun";
+    }
+    if (!Number(data.current.is_day)) {
+      if (Number(astroData.is_moon_up)) {
+        return astroData.moon_phase.toLowerCase().split(" ").join("-");
+      }
+    }
+    return "star";
+  }
+
   async dayOrNight() {
     const data = await this.data;
-    return Number(data.current.is_day) ? "Sun" : "Moon";
+    if (Number(data.current.is_day)) return "Sun";
+    if (Number(data.forecast.forecastday[0].astro.is_moon_up)) return "Moon";
+    return "Stars";
   }
 
   async cityName() {
@@ -156,14 +266,19 @@ export default class WeatherData {
     return data.location.region;
   }
 
+  async currentUVData() {
+    const data = await this.data;
+    return data.current.uv;
+  }
+
   // Return today UV data
   async todayUVData() {
     const data = await this.data;
     return data.forecast.forecastday[0].day.uv;
   }
 
- async uvLevel() {
-    const UV = parseInt(await this.todayUVData(), 10);
+  async uvLevel() {
+    const UV = parseInt(await this.currentUVData(), 10);
     if (UV > 2 && UV <= 5) return "Moderate";
     if (UV > 5 && UV <= 7) return "High";
     if (UV > 7 && UV <= 10) return "Very high";
@@ -171,7 +286,7 @@ export default class WeatherData {
     return "Low";
   }
 
-  async #maxminTempInCelsius(day) {
+  async #maxminTemp(day) {
     let d;
     if (day >= 0 && day < 3) {
       d = Number(day);
@@ -181,25 +296,31 @@ export default class WeatherData {
       );
     }
     const data = await this.data;
+    if (WeatherData.isTempInC) {
+      return {
+        max: data.forecast.forecastday[d].day.maxtemp_c,
+        min: data.forecast.forecastday[d].day.mintemp_c,
+      };
+    }
     return {
-      max: data.forecast.forecastday[d].day.maxtemp_c,
-      min: data.forecast.forecastday[d].day.mintemp_c,
+      max: data.forecast.forecastday[d].day.maxtemp_f,
+      min: data.forecast.forecastday[d].day.mintemp_f,
     };
   }
 
   // Return day min temperature
-  async dayMaxTempInCelsius(day) {
-    const tp = await this.#maxminTempInCelsius(parseInt(day, 10));
+  async dayMaxTemp(day) {
+    const tp = await this.#maxminTemp(parseInt(day, 10));
     return tp.max;
   }
 
   // Return day min temperature
-  async dayMinTempInCelsius(day) {
-    const tp = await this.#maxminTempInCelsius(parseInt(day, 10));
+  async dayMinTemp(day) {
+    const tp = await this.#maxminTemp(parseInt(day, 10));
     return tp.min;
   }
 
-  // Format date in Month name and day form (February 23).
+  // Format date to Month name and day form (February 23).
   async #dateFormatter(d) {
     const day = parseInt(d, 10);
     if (day > 2 && day < 0) {
